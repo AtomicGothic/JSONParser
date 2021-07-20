@@ -45,6 +45,14 @@ namespace JSONParser
                 List<Transaction> outputObj = new List<Transaction>();
                 if(txtInput.Text != string.Empty)
                 {
+                    /***********************************************************************
+                     * Go through every element of the incoming object. If the amount,
+                     *   the last four, the card brand type (e.g. VISA, MASTER, AMEX), 
+                     *   and the date of each transaction matches the next element, add to
+                     *   the output object.
+                     *   
+                     *   NOTE: The incoming JSON file is assumed to be pre-sorted.
+                     **********************************************************************/
                     for (int i = 0; i < inputObj.rows.Count - 1; i++)
                     {
                        if ((inputObj.rows[i].Amount   == inputObj.rows[i + 1].Amount)    &&
@@ -65,6 +73,8 @@ namespace JSONParser
             }
         }
 
+        // Incoming JSON file has hour, minute, second timestamp that needs to be removed.
+        // TruncateDate solves that issue.
         private string truncateDate(string date)
         {
             string outputString = "";
